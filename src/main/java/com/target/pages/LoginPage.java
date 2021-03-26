@@ -1,20 +1,18 @@
 package com.target.pages;
 
-import com.target.drivers.Drivers;
+import com.target.Browser;
+import com.target.Drivers;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 
 public class LoginPage {
 
-    private static WebDriver driver = Drivers.getChromeDriver();
+    private static WebDriver driver = Drivers.get();
 
-    public void navigateTo() {
-        driver.get("http://www.google.com");
-    }
-
-    public void clickLoginButton(){
-        
+    public void openPage() {
+        Browser.goTo("http://www.google.com");
     }
 
     public void setUserName(String userName) {
@@ -24,5 +22,9 @@ public class LoginPage {
     public void setPassword(String userName) {
         // input.setText()
     }
-    
+
+    public void clickLoginButton() {
+        driver.findElement(By.className("gLFyf")).sendKeys(Keys.RETURN);
+    }
+
 }

@@ -5,4 +5,4 @@ Feature: Login
     When Entra o username "leticia"
     And Entra o password "lelele"
     And Clica no botao login
-    Then A mensagem "Login com sucesso" aparece na pagina
+    Then A pagina com titulo "leticia - Google Search" e carregada

@@ -1,4 +1,7 @@
-package com.target.drivers;
+package com.target;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -7,20 +10,24 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class Drivers {
-    private static WebDriver chromeDriver;
+
+    private static Map<BrowserName, WebDriver> DRIVERS = new HashMap<>();
 
     static {
 
         WebDriverManager.chromedriver().setup();
         ChromeOptions opcoesChrome = new ChromeOptions();
         opcoesChrome.addArguments("--start-maximized");
-        chromeDriver = new ChromeDriver(opcoesChrome);
+        DRIVERS.put(BrowserName.CHROME, new ChromeDriver(opcoesChrome));
 
     }
 
-    public static WebDriver getChromeDriver() {
-        return chromeDriver;
+    public static WebDriver get() {
+        return DRIVERS.get(BrowserName.CHROME);
     }
 
+    public enum BrowserName {
+        CHROME
+    }
 
 }
