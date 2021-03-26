@@ -1,33 +1,51 @@
 package com.target;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class Drivers {
 
-    private static Map<BrowserName, WebDriver> DRIVERS = new HashMap<>();
+    private static WebDriver DRIVER;
 
-    static {
+    public static WebDriver get() {
+        final BrowserName browserName = BrowserName.valueOf(Config.getTestBrowserName().toUpperCase());
 
-        WebDriverManager.chromedriver().setup();
-        ChromeOptions opcoesChrome = new ChromeOptions();
-        opcoesChrome.addArguments("--start-maximized");
-        DRIVERS.put(BrowserName.CHROME, new ChromeDriver(opcoesChrome));
+        if (DRIVER == null) {
+            DRIVER = load(browserName);
+        }
+
+        return DRIVER;
 
     }
 
-    public static WebDriver get() {
-        return DRIVERS.get(BrowserName.CHROME);
+    public static void close() {
+        if (DRIVER != null) {
+            DRIVER.quit();
+        }
+    }
+
+    private static WebDriver load(BrowserName browserName) {
+
+        switch (browserName) {
+        case CHROME:
+        default:
+            WebDriverManager.chromedriver().setup();
+            ChromeOptions opcoesChrome = new ChromeOptions();
+            opcoesChrome.addArguments("--start-maximized");
+            return new ChromeDriver(opcoesChrome);
+        case FIREFOX:
+            WebDriverManager.firefoxdriver().setup();
+            return new FirefoxDriver();
+        }
+
     }
 
     public enum BrowserName {
-        CHROME
+        CHROME, FIREFOX
     }
 
 }

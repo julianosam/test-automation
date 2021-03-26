@@ -25,4 +25,6 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    systemProperty "com.target.baseUrl",System.getProperty("com.target.baseUrl")
+    systemProperty "com.target.browser",System.getProperty("com.target.browser")
 }
